@@ -8,7 +8,7 @@
 
 const script = "sudoku.html";  //   my $script = $ENV{SCRIPT_NAME}; $script =~ s/.*\///;
 const blank = ".................................................................................";
-const givensString = ((Deno.env.get('QUERY_STRING') ?? "") + blank).substr(0, 81);
+const givensString = (location.search.replace('?','') + blank).substr(0, 81);
 const givens = Array.from(givensString);
 const choices = Array.from({length:81}).map(_=>"123456789");
 
@@ -105,7 +105,7 @@ function choicesFn(i) {
         return `\n<font color=gray size=-1>${digit}</font>`;
       } else {
         let search = nextGivens(i, digit);
-        return `\n<a href="${script}?${search}">${digit}</a>`;
+        return `\n<a href="?${search}">${digit}</a>`;
       }
     }).join("");
 }
@@ -146,5 +146,8 @@ for (let i=0; i <= 80; i++) {
       <font color=gray size=-1>
         &copy;2005 Ward Cunningham
         &copy;2020 Ward Cunningham, Joshua Benuck, Eric Dobbs, Beth Long
+<script>
+  output.innerHTML = board
+</script>
 </body>
 </html>
